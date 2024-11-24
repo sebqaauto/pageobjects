@@ -1,5 +1,6 @@
 package pageobjectclasses;
 
+import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
@@ -7,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import utils.DataHelper;
 
 public class CommonPage {
 	
@@ -19,10 +22,14 @@ public class CommonPage {
 	 * */
 	String baseUrl = "https://demowebshop.tricentis.com/";
 	WebDriver driver;
+	DataHelper dataHelper;
 	public CommonPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
+		dataHelper = new DataHelper();
 	}
+	
+	String registeredEmailId;
 	
 	@FindBy(css=".ico-register") 
 	WebElement registerLink;
@@ -32,6 +39,9 @@ public class CommonPage {
 	
 	@FindBy(css=".ico-logout") 
 	WebElement logoutLink;
+	
+	@FindBy(css=".header-links .account")
+	WebElement registerUserEmail;
 	
 	//WebElement registerLink = driver.findElement(By.cssSelector(".ico-register"));
 	//WebElement loginLink = driver.findElement(By.cssSelector(".ico-login"));
@@ -58,5 +68,12 @@ public class CommonPage {
 		logoutLink.click();
 	}
 	
+	public void getRegisteredEmailId() {
+		registeredEmailId = registerUserEmail.getText();
+	}
+	
+	public void writeRegisteredUserToExcel(String sheetName) throws IOException {
+		 dataHelper.writeToExcelSheet(sheetName, registeredEmailId);
+	}
 
 }

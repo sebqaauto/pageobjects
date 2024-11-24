@@ -2,6 +2,7 @@ package pageobject.demowebshop;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pageobjectclasses.CommonPage;
 import pageobjectclasses.LoginPage;
 import pageobjectclasses.RegistrationPage;
-import testdata.DataHelper;
+import utils.DataHelper;
 
 /**
  *  Single Inheritance at class level  - override || Java allows multiple interfaces to be implemented 
@@ -43,15 +44,23 @@ public class DemoWebShopTest {
 		
 	}
 	
-	public void getUserData() throws IOException {
-		datahelper.fetchDataFromExcelSheet("userDetails");
+// Test 3 - do user registration taking data from Excel Sheet
+	public void runRegistrationTest2() throws IOException {
+		common.launchApp();
+		common.clickOnRegisterLink();
+		regPage.doUserRegistration("userDetails", 4);
+		common.getRegisteredEmailId();
+		common.writeRegisteredUserToExcel("registeredUserList");
 	}
+	
+	
 	
     public static void main(String[] args) throws InterruptedException, IOException {
         DemoWebShopTest test = new DemoWebShopTest();
         //test.runRegistrationTest();
         //test.runLoginTest();
-        test.getUserData();
+        test.runRegistrationTest2();
+      
         
     }
 }
