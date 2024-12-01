@@ -1,6 +1,7 @@
 package pageobject.demowebshop;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pageobjectclasses.CommonPage;
 import pageobjectclasses.LoginPage;
 import pageobjectclasses.RegistrationPage;
+import utils.DataBaseHelper;
 import utils.DataHelper;
 
 /**
@@ -27,8 +29,9 @@ public class DemoWebShopTest {
 	RegistrationPage regPage = new RegistrationPage(driver);
 	LoginPage loginPage =  new LoginPage(driver);
 	DataHelper datahelper = new DataHelper();
+	DataBaseHelper dbHelper = new DataBaseHelper();
 	
-	// Test 1 - do user registration
+	// Test 1 - do user registration Smoke & Regression 
 	public void runRegistrationTest() throws InterruptedException {
 		common.launchApp();
 		common.clickOnRegisterLink();
@@ -36,15 +39,14 @@ public class DemoWebShopTest {
 		Thread.sleep(3000);
 	}
 	
-	// Test 2 - do login for the registered user
+	// Test 2 - do login for the registered user - Smoke
 	public void runLoginTest() {
 		common.clickOnLogoutLink();
 		common.clickOnLoginLink();
 		loginPage.doUserLogin("sky123@bcci11.com", "YouKnowMe123");
-		
 	}
 	
-// Test 3 - do user registration taking data from Excel Sheet
+	// Test 3 - do user registration taking data from Excel Sheet
 	public void runRegistrationTest2() throws IOException {
 		common.launchApp();
 		common.clickOnRegisterLink();
@@ -53,13 +55,30 @@ public class DemoWebShopTest {
 		common.writeRegisteredUserToExcel("registeredUserList");
 	}
 	
+	// Test 4 fetch data from SQL BD 
+	public void fetchDataFromDBTest() throws ClassNotFoundException, SQLException {
+		dbHelper.fetchDBData2();
+	}
+	
+	// Test 5 fetch data from SQL BD and do customer registration 
+	public void runRegistrationTest3() throws ClassNotFoundException, SQLException, IOException {
+		common.launchApp();
+		common.clickOnRegisterLink();
+		regPage.doUserRegistration();
+		common.getRegisteredEmailId();
+		common.writeRegisteredUserToExcel("registeredUserList");
+	}
 	
 	
-    public static void main(String[] args) throws InterruptedException, IOException {
+	
+    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, SQLException {
         DemoWebShopTest test = new DemoWebShopTest();
         //test.runRegistrationTest();
         //test.runLoginTest();
-        test.runRegistrationTest2();
+        //test.runRegistrationTest2();
+        //test.fetchDataFromDBTest();
+        test.runRegistrationTest3();
+        
       
         
     }

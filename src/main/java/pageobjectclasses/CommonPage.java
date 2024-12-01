@@ -75,5 +75,6 @@ public class CommonPage {
 	public void writeRegisteredUserToExcel(String sheetName) throws IOException {
 		 dataHelper.writeToExcelSheet(sheetName, registeredEmailId);
 	}
+	
 
 }
