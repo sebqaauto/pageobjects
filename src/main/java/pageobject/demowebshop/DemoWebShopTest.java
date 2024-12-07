@@ -8,6 +8,8 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import pageobjectclasses.CommonPage;
 import pageobjectclasses.LoginPage;
@@ -69,17 +71,26 @@ public class DemoWebShopTest {
 		common.writeRegisteredUserToExcel("registeredUserList");
 	}
 	
+
+	public Object[] fetchDataFromDBTest2() throws ClassNotFoundException, SQLException {
+		return dbHelper.fetchDBData3();
+	}
+	
+
+	public void runRegTest(String str1) {
+		System.out.println("From the DB through DataProvider");
+		System.out.println(str1);
+	}
 	
 	
-    public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, SQLException {
-        DemoWebShopTest test = new DemoWebShopTest();
+	
+    //public static void main(String[] args) throws InterruptedException, IOException, ClassNotFoundException, SQLException {
+       // DemoWebShopTest test = new DemoWebShopTest();
         //test.runRegistrationTest();
         //test.runLoginTest();
         //test.runRegistrationTest2();
         //test.fetchDataFromDBTest();
-        test.runRegistrationTest3();
+        //test.runRegistrationTest3();
         
-      
-        
-    }
+    //}
 }

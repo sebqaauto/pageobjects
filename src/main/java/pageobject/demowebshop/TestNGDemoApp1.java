@@ -30,14 +30,45 @@ public class TestNGDemoApp1 {
 		System.out.println("From the -- @BeforeMethod method ");
 	}
 	// The @Test is considering a method to be TestNG Test
-	@Test
+	@Test(groups = {"smoke"}, enabled = true)
 	public void app1FirstTest() {
-		System.out.println("From the -- app1FirstTest method ");
+		//Defect has been raised - if this run it fails
+		System.out.println("From the -- smoke app1FirstTest method ");
 	}
-	@Test
+	@Test(groups = {"smoke"}, alwaysRun = true)
 	public void app1SecondTest() {
-		System.out.println("From the -- app1SecondTest method ");
+		System.out.println("From the -- smoke app1SecondTest method ");
 	}
+	
+	@Test(groups = {"regression"} , dependsOnGroups = {"smoke"})
+	// dependsOnGroups is waiting for a specific group or multiple groups  to finish and return a Success 
+	public void app1ThirdTest() {
+		System.out.println("From the --  regression app1ThirdTest method ");
+	}
+	
+	@Test(groups = {"regression"}, dependsOnGroups = {"smoke"})
+	public void app1FourthTest() {
+		System.out.println("From the -- regression app1FourthTest method ");
+	}
+	
+	@Test(groups = {"smoke"})
+	public void app1ZerothTest() {
+		System.out.println("From the --  smoke app1ZerothTest method ");
+	}
+	
+	@Test(groups = {"end-to-end"}, dependsOnGroups = {"smoke", "regression"}, alwaysRun = true )
+	public void app1FifthTest() {
+		System.out.println("From the -- end-to-end app1FifthTest method ");
+	}
+	
+	
+	@Test(groups = {"end-to-end"}, dependsOnGroups = {"smoke", "regression"} )
+	public void app1SixthTest() {
+		System.out.println("From the -- end-to-end app1SixthTest method ");
+	}
+	
+	
+
 	
 	@AfterMethod // this is concerned at test methods it will run after every @Test method
 	public void afterMethod() {
