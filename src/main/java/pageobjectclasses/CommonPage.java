@@ -1,13 +1,17 @@
 package pageobjectclasses;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import com.google.common.io.Files;
+import org.openqa.selenium.TakesScreenshot;
 
 import utils.DataHelper;
 
@@ -74,6 +78,18 @@ public class CommonPage {
 	
 	public void writeRegisteredUserToExcel(String sheetName) throws IOException {
 		 dataHelper.writeToExcelSheet(sheetName, registeredEmailId);
+	}
+	
+	public String takeSnap() throws IOException {
+		String title = driver.getTitle();
+		String filename = title+".jpg";
+		String path = "/Users/sebastianselvarajaugustine/eclipse-workspace/demowebshop/src/main/java/test-snaps"+filename;
+		//Cast the WebDriver object as TakesScreenshot
+		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+		File fileLocationForSnap = new File(path);
+		Files.copy(screenshot, fileLocationForSnap);
+		return path;
+		
 	}
 	
 

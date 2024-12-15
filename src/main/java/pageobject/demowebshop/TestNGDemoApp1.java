@@ -66,8 +66,6 @@ public class TestNGDemoApp1 {
 	public void app1SixthTest() {
 		System.out.println("From the -- end-to-end app1SixthTest method ");
 	}
-	
-	
 
 	
 	@AfterMethod // this is concerned at test methods it will run after every @Test method
